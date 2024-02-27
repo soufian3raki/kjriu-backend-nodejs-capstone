@@ -4,8 +4,8 @@ const fs = require('fs');
 
 // MongoDB connection URL with authentication options
 let url = `${process.env.MONGO_URL}`;
-let filename = `${__dirname}/gifts.json`;
-const dbName = 'giftdb';
+let filename = `${__dirname}/prelovedgoods.json`;
+const dbName = 'preloved';
 const collectionName = 'gifts';
 
 // notice you have to load the array of gifts into the data object
@@ -33,7 +33,7 @@ async function loadData() {
             const insertResult = await collection.insertMany(data);
             console.log('Inserted documents:', insertResult.insertedCount);
         } else {
-            console.log("Gifts already exists in DB")
+            console.log("Goods already exists in DB")
         }
     } catch (err) {
         console.error(err);
