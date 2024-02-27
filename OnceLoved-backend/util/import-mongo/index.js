@@ -6,7 +6,7 @@ const fs = require('fs');
 let url = `${process.env.MONGO_URL}`;
 let filename = `${__dirname}/prelovedgoods.json`;
 const dbName = 'preloved';
-const collectionName = 'gifts';
+const collectionName = 'prelovedgoods';
 
 // notice you have to load the array of gifts into the data object
 const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs;
