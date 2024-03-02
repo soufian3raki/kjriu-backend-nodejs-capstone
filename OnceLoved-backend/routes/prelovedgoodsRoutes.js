@@ -68,36 +68,11 @@ router.get('/:id', async (req, res, next) => {
 // Update and existing item
 router.put('/:id', async(req, res,next) => {
     try {
-        const db = await connectToDatabase();
-        const collection = db.collection("prelovedgoods");
-        const id = req.params.id;
-        const prelovedGood = await collection.findOne({ id });
-
-        if (!prelovedGood) {
-            logger.error('prelovedGood not found');
-            return res.status(404).json({ error: "prelovedGood not found" });
-        }
-
-        prelovedGood.category = req.body.category;
-        prelovedGood.condition = req.body.condition;
-        prelovedGood.age_days = req.body.age_days;
-        prelovedGood.description = req.body.description;
-        prelovedGood.age_years = Number((prelovedGood.age_days/365).toFixed(1));
-        prelovedGood.updatedAt = new Date();
-
-        const updatepreloveGood = await collection.findOneAndUpdate(
-            { id },
-            { $set: prelovedGood },
-            { returnDocument: 'after' }
-        );
-
-
-        if(updatepreloveGood) {
-            res.json({"uploaded":"success"});
-        } else {
-            res.json({"uploaded":"failed"});
-        }
-
+        //Step 5: task 1 - insert code here
+        //Step 5: task 2 - insert code here
+        //Step 5: task 3 - insert code here
+        //Step 5: task 4 - insert code here
+        //Step 5: task 5 - insert code here
     } catch (e) {
         next(e);
     }
@@ -106,18 +81,10 @@ router.put('/:id', async(req, res,next) => {
 // Delete an existing item
 router.delete('/:id', async(req, res,next) => {
     try {
-        const db = await connectToDatabase();
-        const collection = db.collection("prelovedgoods");
-        const id = req.params.id;
-        const prelovedGood = await collection.findOne({ id });
-
-        if (!prelovedGood) {
-            logger.error('prelovedGood not found');
-            return res.status(404).json({ error: "prelovedGood not found" });
-        }
-        const updatepreloveGood = await collection.deleteOne({ id });
-
-        res.json({"deleted":"success"});
+        //Step 6: task 1 - insert code here
+        //Step 6: task 2 - insert code here
+        //Step 6: task 3 - insert code here
+        //Step 6: task 4 - insert code here
     } catch (e) {
         next(e);
     }
