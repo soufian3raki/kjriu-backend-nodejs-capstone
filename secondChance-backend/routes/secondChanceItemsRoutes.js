@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-// Get all prelovedgoods
+// Get all secondChanceItems
 router.get('/', async (req, res, next) => {
     logger.info('/ called');
     try {
@@ -31,9 +31,9 @@ router.get('/', async (req, res, next) => {
         //Step 2: task 3 - insert code here
         //Step 2: task 4 - insert code here
 
-        const collection = db.collection("prelovedgoods");
-        const prelovedgoods = await collection.find({}).toArray();
-        res.json(prelovedgoods);
+        const collection = db.collection("secondChanceItems");
+        const secondChanceItems = await collection.find({}).toArray();
+        res.json(secondChanceItems);
     } catch (e) {
         logger.console.error('oops something went wrong', e)
         next(e);
@@ -47,13 +47,13 @@ router.post('/', {Step 3: Task 4 insert code here}, async(req, res,next) => {
         //Step 3: task 1 - insert code here
         //Step 3: task 2 - insert code here
         //Step 3: task 3 - insert code here
-        res.status(201).json(prelovedgood.ops[0]);
+        res.status(201).json(secondChanceItem.ops[0]);
     } catch (e) {
         next(e);
     }
 });
 
-// Get a single prelovedgood by ID
+// Get a single secondChanceItem by ID
 router.get('/:id', async (req, res, next) => {
     try {
         //Step 4: task 1 - insert code here
