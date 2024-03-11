@@ -41,12 +41,14 @@ router.get('/', async (req, res, next) => {
 });
 
 // Add a new item
-router.post('/', {Step 3: Task 4 insert code here}, async(req, res,next) => {
+router.post('/', {Step 3: Task 6 insert code here}, async(req, res,next) => {
     try {
 
         //Step 3: task 1 - insert code here
         //Step 3: task 2 - insert code here
         //Step 3: task 3 - insert code here
+        //Step 3: task 4 - insert code here
+        //Step 3: task 5 - insert code here
         res.status(201).json(secondChanceItem.ops[0]);
     } catch (e) {
         next(e);
