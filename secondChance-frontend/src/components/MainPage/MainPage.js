@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {urlConfig} from '../../config';
+import { useAppContext } from '../../context/AppContext';
 
 function MainPage() {
-    const [gifts, setGifts] = useState([])
+    const [items, setItems] = useState([])
     const navigate = useNavigate();
+    const { isLoggedIn } = useAppContext();
+
 
     useEffect(() => {
-        // fetch all gifts
-        const fetchGifts = async () => {
+        // fetch all items
+        const fetchItems = async () => {
             try {
-                let url = `${urlConfig.backendUrl}/api/gifts`
+                let url = `${urlConfig.backendUrl}/api/secondchance/items`
                 const response = await fetch(url);
                 if (!response.ok) {
                     //something went wrong
                     throw new Error(`HTTP error; ${response.status}`)
                 }
                 const data = await response.json();
-                setGifts(data);
+                setItems(data);
             } catch (error) {
                 console.log('Fetch error: ' + error.message);
             }
         };
 
-        fetchGifts();
+        fetchItems();
     }, []);
 
-    const goToDetailsPage = (productId) => {
-        navigate(`/app/product/${productId}`);
+    const goToDetailsPage = (itemId) => {
+        navigate(`/app/item/${itemId}`);
+    };
+
+    const handleAddItem = () => {
+        navigate(`/app/addItem`);
     };
 
     const formatDate = (timestamp) => {
@@ -41,27 +48,32 @@ function MainPage() {
 
     return (
         <div className="container mt-5">
-            <div className="row">
-                {gifts.map((gift) => (
-                    <div key={gift.id} className="col-md-4 mb-4">
+            {isLoggedIn ? (
+              <button onClick={handleAddItem}>Add Item</button>
+            ) : (
+                null
+            )}
+        <div className="row">
+                {items.map((item) => (
+                    <div key={item.id} className="col-md-4 mb-4">
                         <div className="card product-card">
                             <div className="image-placeholder">
-                                {gift.image ? (
-                                    <img src={gift.image} alt={gift.name} />                                ) : (
+                                {item.image ? (
+                                    <img src={urlConfig.backendUrl+item.image} alt={item.name} />                                ) : (
                                     <div className="no-image-available">No Image Available</div>
                                 )}
                             </div>
                             <div className="card-body">
-                                <h5 className="card-title">{gift.name}</h5>
-                                <p className={`card-text ${getConditionClass(gift.condition)}`}>
-                                    {gift.condition}
+                                <h5 className="card-title">{item.name}</h5>
+                                <p className={`card-text ${getConditionClass(item.condition)}`}>
+                                    {item.condition}
                                 </p>
                                 <p className="card-text date-added">
-                                    {formatDate(gift.date_added)}
+                                    {formatDate(item.date_added)}
                                 </p>
                             </div>
                             <div className="card-footer">
-                                <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary w-100">
+                                <button onClick={() => goToDetailsPage(item.id)} className="btn btn-primary w-100">
                                     View Details
                                 </button>
                             </div>

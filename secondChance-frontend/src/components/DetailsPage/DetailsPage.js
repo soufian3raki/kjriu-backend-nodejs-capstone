@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { urlConfig } from "../../config"
+import { useAppContext } from '../../context/AppContext';
 
 import './DetailsPage.css';
 
 function DetailsPage() {
     const navigate = useNavigate();
-    const { productId } = useParams();
+    const { itemId } = useParams();
     const [gift, setGift] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { isLoggedIn } = useAppContext();
+
 
     useEffect(() => {
-        const authenticationToken = sessionStorage.getItem('auth-token');
-        if (!authenticationToken) {
+        if (!isLoggedIn) {
             navigate('/app/login')
         }
 
@@ -21,9 +23,9 @@ function DetailsPage() {
         window.scrollTo(0, 0);
 
         // get the gift to be rendered on the details page
-        const fetchGift = async () => {
+        const fetchItem = async () => {
             try {
-                const response = await fetch(`${urlConfig.backendUrl}/api/gifts/${productId}`);
+                const response = await fetch(`${urlConfig.backendUrl}/api/secondchance/items/${itemId}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -36,36 +38,13 @@ function DetailsPage() {
             }
         };
 
-        fetchGift();
+        fetchItem();
         window.scrollTo(0, 0);
-    }, [productId]);
+    }, [itemId, isLoggedIn, navigate]);
 
     const handleBackClick = () => {
         navigate(-1); // Navigates back to the previous page
     };
-
-    const comments = [
-        {
-            author: "John Doe",
-            comment: "I would like this!"
-        },
-        {
-            author: "Jane Smith",
-            comment: "Just DMed you."
-        },
-        {
-            author: "Alice Johnson",
-            comment: "I will take it if it's still available."
-        },
-        {
-            author: "Mike Brown",
-            comment: "This is a good one!"
-        },
-        {
-            author: "Sarah Wilson",
-            comment: "My family can use one. DM me if it is still available. Thank you!"
-        }
-    ];
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -81,7 +60,7 @@ function DetailsPage() {
                 <div className="card-body">
                     <div className="image-placeholder-large">
                         {gift.image ? (
-                            <img src={gift.image} alt={gift.name} className="product-image-large" />
+                            <img src={urlConfig.backendUrl+gift.image} alt={gift.name} className="product-image-large" />
                         ) : (
                             <div className="no-image-available-large">No Image Available</div>
                         )}
@@ -96,7 +75,7 @@ function DetailsPage() {
             </div>
             <div className="comments-section mt-4">
                 <h3 className="mb-3">Comments</h3>
-                {comments.map((comment, index) => (
+                {gift.comments.map((comment, index) => (
                     <div key={index} className="card mb-3">
                         <div className="card-body">
                             <p className="comment-author"><strong>{comment.author}:</strong></p>
