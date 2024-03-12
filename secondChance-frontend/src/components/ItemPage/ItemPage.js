@@ -3,8 +3,6 @@ import {useNavigate } from 'react-router-dom';
 import { urlConfig } from "../../config"
 import { useAppContext } from '../../context/AppContext';
 
-import './ItemPage.css';
-
 function ItemPage() {
     const navigate = useNavigate();
     const [name, setName] = useState('');
