@@ -14,7 +14,7 @@ function SearchPage() {
         // fetch all products
         const fetchProducts = async () => {
             try {
-                let url = `${urlConfig.backendUrl}/api/gifts`
+                let url = `${urlConfig.backendUrl}/api/secondchance/items`
                 console.log(url)
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -34,7 +34,7 @@ function SearchPage() {
 
     const handleSearch = async () => {
         // Construct the search URL based on user input
-        const baseUrl = `${urlConfig.backendUrl}/api/search?`;
+        const baseUrl = `${urlConfig.backendUrl}/api/secondchance/search?`;
         const queryParams = new URLSearchParams({
             name: searchQuery,
             age_years: ageRange,
@@ -115,7 +115,7 @@ function SearchPage() {
                             searchResults.map(product => (
                                 <div key={product.id} className="card mb-3">
                                     {/* Check if product has an image and display it */}
-                                    <img src={product.image} alt={product.name} className="card-img-top" />
+                                    <img src={urlConfig.backendUrl+product.image} alt={product.name} className="card-img-top" />
                                     <div className="card-body">
                                         <h5 className="card-title">{product.name}</h5>
                                         <p className="card-text">{product.description.slice(0, 100)}...</p>
