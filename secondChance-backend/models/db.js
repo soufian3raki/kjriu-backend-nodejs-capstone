@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 let url = `${process.env.MONGO_URL}`;
 
 let dbInstance = null;
-const dbName = "giftdb";
+const dbName = `${process.env.MONGO_DB}`;
 
 async function connectToDatabase() {
     if (dbInstance){
